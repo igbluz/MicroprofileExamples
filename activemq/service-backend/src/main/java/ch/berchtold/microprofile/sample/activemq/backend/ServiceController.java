@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 public class ServiceController {
 
     @Resource(lookup = "jms/ConnectionFactory")
-    private ConnectionFactory cf;
+    private ConnectionFactory connectionFactory;
 
     @Resource(lookup = "jms/sample.backend.queue")
     private Queue queue;
@@ -20,7 +20,7 @@ public class ServiceController {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response sendMessageToQueue(@PathParam("message") String message) {
         try {
-            Connection connection = cf.createConnection();
+            Connection connection = connectionFactory.createConnection();
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             connection.start();
             TextMessage textMessage = session.createTextMessage(message);

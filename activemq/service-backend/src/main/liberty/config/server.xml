@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <server description="${project.name}">
 
+    <!-- for that MDB works you need to add ejbLite-3.2, jms2.0 and mdb-3.2 feature -->
     <featureManager>
         <feature>microProfile-3.3</feature>
         <feature>ejbLite-3.2</feature>
