@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="${project.name}">
+
+    <featureManager>
+        <feature>microProfile-3.3</feature>
+        <feature>ejbLite-3.2</feature>
+        <feature>jms-2.0</feature>
+        <feature>mdb-3.2</feature>
+    </featureManager>
+
+    <logging consoleLogLevel="INFO"  />
+
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="9081"
+                  httpsPort="9444"/>
+
+    <resourceAdapter autoStart="true" id="activemq" location="${shared.resource.dir}activemq-rar-5.15.13.rar">
+        <properties.activemq serverUrl="tcp://localhost:61616" userName="admin" password="admin"/>
+    </resourceAdapter>
+
+    <jmsConnectionFactory id="ConnectionFactory" jndiName="jms/ConnectionFactory">
+        <properties.activemq serverUrl="tcp://localhost:61616" userName="admin" password="admin"/>
+    </jmsConnectionFactory>
+
+    <jmsQueue id="sample.backend.queue" jndiName="jms/sample.backend.queue">
+        <properties.activemq PhysicalName="sample.backend.queue" />
+    </jmsQueue>
+
+    <jmsActivationSpec id="${project.name}/JmsReceiverEJB">
+        <properties.activemq />
+    </jmsActivationSpec>
+
+    <webApplication location="${project.name}.war" name="${project.name}" contextRoot="/">
+        <classloader apiTypeVisibility="+third-party" />
+    </webApplication>
+
+    <mpMetrics authentication="false"/>
+    <!-- This is the keystore that will be used by SSL and by JWT. -->
+    <keyStore id="defaultKeyStore" location="public.jks" type="JKS" password="atbash" />
+
+    <!-- The MP JWT configuration that injects the caller's JWT into a ResourceScoped bean for inspection. -->
+    <mpJwt id="jwtUserConsumer" keyName="theKeyId" audiences="targetService" issuer="${jwt.issuer}"/>
+
+</server>
