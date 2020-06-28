@@ -1,6 +1,6 @@
 # ActiveMQ Sample
 
-There are two microservies, one activemq-service-backend and one activemq-service-client.
+There are two microservices, one activemq-service-backend and one activemq-service-client.
 
 There are 2 projects generated so that the examples for the Rest Client and/or JWT Auth specification are more realistic in the sense that they actually call an endpoint within another service.
 
